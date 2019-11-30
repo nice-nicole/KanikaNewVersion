@@ -18,15 +18,26 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class SignupActivity extends AppCompatActivity {
-    private EditText names;
+    private EditText name;
     private EditText email;
     private EditText password;
-    private EditText confirmpassword;
+    private EditText telephone;
+    private EditText type;
+    private EditText description;
+
     private Button registerBtn;
     private TextView loginPage;
     private FirebaseAuth authentication;
+
+    DatabaseReference dbRef;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +46,9 @@ public class SignupActivity extends AppCompatActivity {
 
         authentication = FirebaseAuth.getInstance();
 
+        name= (EditText) findViewById(R.id.names);
         email= (EditText) findViewById(R.id.email);
+        password = (EditText) findViewById(R.id.password);
         password = (EditText) findViewById(R.id.password);
         registerBtn = (Button) findViewById(R.id.register);
         loginPage = (TextView) findViewById(R.id.txt2);
@@ -56,8 +69,8 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-//                String noms = names.getText().toString();
-                String mail = email.getText().toString();
+                final String names = name.getText().toString();
+                final String mail = email.getText().toString();
                 String pass = password.getText().toString();
 //                String pass2 = email.getText().toString();
 
@@ -83,12 +96,37 @@ public class SignupActivity extends AppCompatActivity {
                 else if(email.getText().length()!=0 && password.getText().length()!=0){
 
                     authentication.createUserWithEmailAndPassword(mail, pass).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
+
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+
                             Toast.makeText(SignupActivity.this, "Your account have been registered!", Toast.LENGTH_SHORT).show();
                             if (!task.isSuccessful()) {
                                 Toast.makeText(SignupActivity.this, "Authentication failed! Please try again!", Toast.LENGTH_SHORT).show();
                             } else {
+                                final FirebaseUser firebaseUser= authentication.getCurrentUser();
+                                firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            Toast.makeText(SignupActivity.this, "check your mails", Toast.LENGTH_SHORT).show();
+                                            authentication.getCurrentUser().reload();
+
+                                            String personId = firebaseUser.getUid();
+
+
+                                            dbRef= FirebaseDatabase.getInstance().getReference("Persons").child(personId);
+                                            HashMap<String, String> hs= new HashMap<>();
+                                            hs.put("id", personId);
+                                            hs.put("name", names);
+                                            hs.put("email", mail);
+                                            hs.put("password", names);
+                                            hs.put("name", names);
+
+                                        }
+
+                                    }
+                                });
                                 startActivity(new Intent(SignupActivity.this, com.example.kanikanavbar.View.LoginActivity.class));
                                 finish();
                             }
@@ -98,5 +136,6 @@ public class SignupActivity extends AppCompatActivity {
 
             }
         });
+
     }
 }

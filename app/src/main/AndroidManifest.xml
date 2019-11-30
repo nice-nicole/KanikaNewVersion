@@ -12,23 +12,21 @@
         <activity android:name=".View.ImagesActivity"
             android:label="Spare parts"></activity>
 
-        <activity android:name=".View.shareholderActivity"
-            android:label="Uploading spare parts"/>
-        <activity android:name=".View.UploadActivity" />
-
         <activity android:name=".View.SignupActivity"
             android:label="signup"/>
         <activity android:name=".View.LoginActivity"
-            android:label="login"/>
+            android:label="login">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

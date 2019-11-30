@@ -32,6 +32,7 @@
                             android:layout_below="@id/txt"
                             android:layout_centerHorizontal="true"
                             android:hint="email-adress"
+                            android:inputType="textEmailAddress"
                             android:layout_marginBottom="20dp" />
 
                         <EditText
@@ -45,6 +46,8 @@
                             android:layout_marginBottom="20dp"
                             />
 
+
+
                         <EditText
                             android:id="@+id/password"
                             android:layout_width="350dp"
@@ -57,13 +60,26 @@
                             android:layout_marginBottom="20dp" />
 
                         <EditText
-                            android:id="@+id/confpassword"
+                            android:id="@+id/telephone"
                             android:layout_width="350dp"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/password"
-                            android:hint="confirm password"
+                            android:hint="telephone"
+                            android:inputType="phone"
+
                             android:layout_centerHorizontal="true"
-                            android:layout_marginBottom="20dp"/>
+                            android:layout_marginBottom="20dp"
+                            />
+                        <EditText
+                            android:id="@+id/description"
+                            android:layout_width="350dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/telephone"
+                            android:hint="description"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="20dp"
+                            />
+
 
                         <Button
                             android:id="@+id/register"
@@ -75,7 +91,7 @@
                             android:text="Register"
                             android:background = "@drawable/round_button"
                             android:textSize="20sp"
-                            android:layout_below="@id/confpassword"
+                            android:layout_below="@id/telephone"
                             android:textColor="#ffffff"
                             android:layout_marginBottom="10dp"/>
 
