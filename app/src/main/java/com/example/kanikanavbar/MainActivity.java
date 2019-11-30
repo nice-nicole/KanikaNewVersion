@@ -2,11 +2,19 @@ package com.example.kanikanavbar;
 
 import android.os.Bundle;
 
+import com.example.kanikanavbar.Fragment.BuyFragment;
+import com.example.kanikanavbar.Fragment.ChatFragment;
+import com.example.kanikanavbar.Fragment.MechaniciansFragment;
+import com.example.kanikanavbar.Fragment.SellFragment;
+import com.example.kanikanavbar.Fragment.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -21,7 +29,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -44,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send)
+                R.id.nav_home, R.id.nav_buy, R.id.nav_sell,
+                R.id.nav_mechanicians, R.id.nav_chats, R.id.nav_exit)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -66,4 +74,39 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+        int id= menuItem.getItemId();
+
+        if(id== R.id.nav_home){
+            getSupportActionBar().setTitle("Home");
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
+
+        }else if(id== R.id.nav_buy){
+            getSupportActionBar().setTitle("buy spareparts");
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, new BuyFragment()).commit();
+
+        }else if(id== R.id.nav_sell){
+        getSupportActionBar().setTitle("sell spareparts");
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new SellFragment()).commit();
+
+        }else if(id== R.id.nav_mechanicians){
+        getSupportActionBar().setTitle("Mechanicians");
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new MechaniciansFragment()).commit();
+        }
+        else if(id== R.id.nav_chats){
+        getSupportActionBar().setTitle("chats");
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new ChatFragment()).commit();
+        }
+        else if(id== R.id.nav_exit){
+
+        }
+        DrawerLayout d= (DrawerLayout) findViewById(R.id.drawer_layout);
+        d.closeDrawer(GravityCompat.START);
+
+        return true;
+    }
+
 }

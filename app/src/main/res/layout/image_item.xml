@@ -19,7 +19,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/berkshire_swash"
             />
 
         <ImageView
@@ -39,7 +38,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/berkshire_swash"
             android:hint="cat"
             android:textColor="@android:color/black"
             android:textSize="20sp" />
@@ -52,7 +50,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:fontFamily="@font/berkshire_swash"
             android:hint="price"
             android:textColor="@android:color/black"
             android:textSize="20sp" />
@@ -68,8 +65,7 @@
             android:textSize="20sp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/berkshire_swash"/>
+            android:layout_marginTop="8dp"/>
 
         </LinearLayout>
 
