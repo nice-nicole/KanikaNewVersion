@@ -72,14 +72,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_buy, R.id.nav_sell,
-                R.id.nav_mechanicians, R.id.nav_chats, R.id.nav_exit)
-                .setDrawerLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+//        mAppBarConfiguration = new AppBarConfiguration.Builder(
+//                R.id.nav_home, R.id.nav_buy, R.id.nav_sell,
+//                R.id.nav_mechanicians, R.id.nav_chats, R.id.nav_exit)
+//                .setDrawerLayout(drawer)
+//                .build();
+//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+//        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+//        NavigationUI.setupWithNavController(navigationView, navController);
+//        updateNavBAr();
 
 //        getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
 
@@ -138,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new ChatFragment()).commit();
         }
         else if(id== R.id.nav_exit){
+            System.exit(0);
 
         }
         DrawerLayout d= (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -146,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void updateNavaBAr(){
+    public void updateNavBAr(){
         NavigationView nav= (NavigationView) findViewById(R.id.nav_view);
         View hv= nav.getHeaderView(0);
         final TextView userMail= hv.findViewById(R.id.email);
@@ -158,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Person person = dataSnapshot.getValue(Person.class);
                 if(person.getEmail() != null){
-                    userMail.setText(person.getEmail());
+                    userMail.setText(user.getEmail());
 
                 }
 
