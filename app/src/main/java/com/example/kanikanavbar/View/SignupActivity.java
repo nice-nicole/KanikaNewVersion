@@ -49,13 +49,24 @@ public class SignupActivity extends AppCompatActivity {
         name= (EditText) findViewById(R.id.names);
         email= (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
-        password = (EditText) findViewById(R.id.password);
+        description = (EditText) findViewById(R.id.description);
+//        type = (EditText) findViewById(R.id.type);
+        telephone = (EditText) findViewById(R.id.telephone);
+
         registerBtn = (Button) findViewById(R.id.register);
+
         loginPage = (TextView) findViewById(R.id.txt2);
 
         Button btn = (Button)findViewById(R.id.register);
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
         btn.startAnimation(animation);
+
+
+        final FirebaseUser firebaseUser= authentication.getCurrentUser();
+        if(firebaseUser.getEmail().equals("nicenicky2019@gmail.com")){
+            description.setVisibility(View.VISIBLE);
+        }
+
 
         loginPage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +74,7 @@ public class SignupActivity extends AppCompatActivity {
                 startActivity(new Intent(SignupActivity.this, com.example.kanikanavbar.View.LoginActivity.class));
             }
         });
+
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -72,12 +84,14 @@ public class SignupActivity extends AppCompatActivity {
                 final String names = name.getText().toString();
                 final String mail = email.getText().toString();
                 String pass = password.getText().toString();
-//                String pass2 = email.getText().toString();
+                final String phoneNumber= telephone.getText().toString();
+                final String desc= description.getText().toString();
 
-//                if(names.getText().length()==0){
-//                    names.setError("This field is required!");
-//                    names.requestFocus();
-//                }
+
+                if(name.getText().length()==0){
+                    name.setError("This field is required!");
+                    name.requestFocus();
+                }
                  if(email.getText().length()==0){
                     email.setError("This field is required!");
                     email.requestFocus();
@@ -86,14 +100,12 @@ public class SignupActivity extends AppCompatActivity {
                     password.setError("This field is required");
                     password.requestFocus();
                 }
-//                else if(confirmpassword.getText().length()==0){
-//                    confirmpassword.setError("This field is required");
-//                    confirmpassword.requestFocus();
-//                }
-                else if(email.getText().length()==0 && password.getText().length()==0 && confirmpassword.getText().length()==0 && names.getText().length()==0){
+
+                else if(email.getText().length()==0 && password.getText().length()==0){
                     Toast.makeText(SignupActivity.this, "Fill all the fields please", Toast.LENGTH_SHORT).show();
                 }
                 else if(email.getText().length()!=0 && password.getText().length()!=0){
+
 
                     authentication.createUserWithEmailAndPassword(mail, pass).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
 
@@ -104,7 +116,7 @@ public class SignupActivity extends AppCompatActivity {
                             if (!task.isSuccessful()) {
                                 Toast.makeText(SignupActivity.this, "Authentication failed! Please try again!", Toast.LENGTH_SHORT).show();
                             } else {
-                                final FirebaseUser firebaseUser= authentication.getCurrentUser();
+
                                 firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
@@ -114,21 +126,32 @@ public class SignupActivity extends AppCompatActivity {
 
                                             String personId = firebaseUser.getUid();
 
-
                                             dbRef= FirebaseDatabase.getInstance().getReference("Persons").child(personId);
                                             HashMap<String, String> hs= new HashMap<>();
                                             hs.put("id", personId);
                                             hs.put("name", names);
                                             hs.put("email", mail);
-                                            hs.put("password", names);
-                                            hs.put("name", names);
+                                            hs.put("telephone", phoneNumber);
+                                            hs.put("description", desc);
+                                            if(firebaseUser.getEmail().equals("nicenicky2019@gmail.com")){
+                                                hs.put("type","admin");
+                                            }else{
+                                                hs.put("type","user");
+                                            }
+
+                                            dbRef.setValue(hs).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    startActivity(new Intent(SignupActivity.this, com.example.kanikanavbar.View.LoginActivity.class));
+                                                    finish();
+                                                }
+                                            });
 
                                         }
 
                                     }
                                 });
-                                startActivity(new Intent(SignupActivity.this, com.example.kanikanavbar.View.LoginActivity.class));
-                                finish();
+
                             }
                         }
                     });

@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kanikanavbar.Fragment.HomeFragment;
 import com.example.kanikanavbar.MainActivity;
 import com.example.kanikanavbar.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -58,10 +59,10 @@ public class LoginActivity extends AppCompatActivity {
                 String mail = email.getText().toString();
                 String pass = password.getText().toString();
 
-                if(mail.equals("nic@gmail.com") && pass.equals("123456")){
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
-                }
+//                if(mail.equals("nicenicky2019@gmail.com") && pass.equals("123456")){
+//                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                    finish();
+//                }
 
                 if(email.getText().length()==0){
                     email.setError("This field is required!");
