@@ -148,6 +148,7 @@ public class SellFragment extends Fragment{
 
         // Inflate the layout for this fragment
         return root;
+//        return inflater.inflate(R.layout.fragment_sell, container, false);
 
     }
 
